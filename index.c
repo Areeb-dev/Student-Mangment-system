@@ -7,7 +7,7 @@
 
 #include<math.h>
 
-// #include <windows.h>
+#include <windows.h>
 
 #define Student struct Stud
  
@@ -108,7 +108,7 @@ int main() {
       printChar('*', 64);
       printf("\n\n\t\t\t\t1. Add Student");
       printf("\n\n\t\t\t\t2. Modify Student");
-      printf("\n\n\t\t\t\t3. Show All Student");
+      printf("\n\n\t\t\t\t3. View All Students");
       printf("\n\n\t\t\t\t4. Search Student By Name");
       printf("\n\n\t\t\t\t5. Search Student By Roll No");
       printf("\n\n\t\t\t\t6. Remove Student");
