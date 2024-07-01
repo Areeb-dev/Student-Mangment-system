@@ -9,8 +9,8 @@
 
 #include <windows.h>
 
-
-#define Student struct Stud 
+#define Student struct Stud
+ 
 void addStudent(FILE * fp);
 void modify(FILE * fp);
 void display(FILE * fp);
@@ -19,16 +19,16 @@ void password();
 FILE * del(FILE * fp);
 void printChar(char ch, int n);
 void title();
-void calculateOverallGrade(float cgpa);
-void searchStudentByName(FILE * fp);
 FILE * tp;
+void calculateOverallGrade(float cgpa);
+void searchStudentByName(FILE *fp);
+
 void gotoxy(int x, int y) {
   COORD CRD;
   CRD.X = x;
   CRD.Y = y;
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CRD);
 }
-
 struct pass {
   char pass[25];
 }
@@ -56,14 +56,13 @@ int main() {
   }
   system("color 9f");
   gotoxy(42, 8);
-  printf("LOGIN(If 1st login press ENTER)");
+  printf("LOGIN SMS");
   gotoxy(42, 10);
   printf("____________________________________");
   gotoxy(42, 11);
   printf("|\tEnter password : |");
   gotoxy(42, 12);
   printf("|__________________________________|");
-  //printf("\n\t\t\t\t\t");
   gotoxy(65, 11);
   while (k < 10) {
     pas[k] = getch();
@@ -108,9 +107,9 @@ int main() {
       printChar('*', 64);
       printf("\n\n\t\t\t\t1. Add Student");
       printf("\n\n\t\t\t\t2. Modify Student");
-      printf("\n\n\t\t\t\t3. Search Student By Name");
-      printf("\n\n\t\t\t\t4. Show All Student");
-      printf("\n\n\t\t\t\t5. Individual View");
+      printf("\n\n\t\t\t\t3. Show All Student");
+      printf("\n\n\t\t\t\t4. Search Student By Name");
+      printf("\n\n\t\t\t\t5. Search Student By Roll No");
       printf("\n\n\t\t\t\t6. Remove Student");
       printf("\n\n\t\t\t\t7. Change Password");
       printf("\n\n\t\t\t\t8. Logout\n\t");
@@ -125,10 +124,10 @@ int main() {
         modify(fp);
         break;
       case 3:
-        searchStudentByName(fp);
+        display(fp);
         break; 
       case 4:
-        display(fp);
+        searchStudentByName(fp);
         break;
       case 5:
         Indivisual(fp);
@@ -190,7 +189,6 @@ void title() {
   printChar('=', 19);
   printf("\n");
 } 	
-//Insert at end
 
 FILE * del(FILE * fp) {
   title();
@@ -229,6 +227,7 @@ FILE * del(FILE * fp) {
   system("pause");
   return fp;
 }
+
 void modify(FILE * fp) {
   title();
   Student s;
@@ -283,14 +282,13 @@ void display(FILE * fp) {
     printf("\n\t\tNAME : %s", s.name);
     printf("\n\n\t\tDEPARTMENT : %s", s.dept);
     printf("\n\n\t\tROLL : %d", s.roll);
-    printf("\n\n\tSGPA: ");
+    printf("\n\n\t\tSGPA: ");
     for (i = 0; i < 12; i++){
         printf("| %.2f |", s.sgpa[i]);
         overAllGPA+= s.sgpa[i];
     }
-	overAllGPA /=12.0;
 	calculateOverallGrade(overAllGPA);
-    printChar('-', 65);
+    printChar('-', 95);
   }
   printf("\n\n\n\t");
   printChar('*', 65);
@@ -319,12 +317,11 @@ void Indivisual(FILE * fp) {
       printf("\n\t\tNAME : %s", s.name);
       printf("\n\n\t\tDepartment : %s", s.dept);
       printf("\n\n\t\tROLL : %d", s.roll);
-      printf("\n\n\tSGPA: ");
+      printf("\n\n\t\tSGPA: ");
        for (i = 0; i < 12; i++){
         printf("| %.2f |", s.sgpa[i]);
         overAllGPA+= s.sgpa[i];
     	}
-		overAllGPA /=12.0;
 		calculateOverallGrade(overAllGPA);
       printChar('-', 65);
     } else {
@@ -355,13 +352,13 @@ void searchStudentByName(FILE *fp) {
             printf("\n\t\tNAME : %s", s.name);
             printf("\n\n\t\tDepartment : %s", s.dept);
             printf("\n\n\t\tROLL : %d", s.roll);
-            printf("\n\n\tSGPA: ");
+            printf("\n\n\t\tSGPA: ");
             for (i = 0; i < 12; i++){
-        printf("| %.2f |", s.sgpa[i]);
-        overAllGPA+= s.sgpa[i];
-    	}
-		overAllGPA /=12.0;
-		calculateOverallGrade(overAllGPA);
+		        printf("| %.2f |", s.sgpa[i]);
+        		overAllGPA+= s.sgpa[i];
+    		}
+    		
+			calculateOverallGrade(overAllGPA);
             printChar('-', 65);
             break;
         }
@@ -424,18 +421,19 @@ void addStudent(FILE * fp) {
 }
 
 void calculateOverallGrade(float cgpa) {
-    printf("\n\n\tOverall CGPA: %.2f\n", cgpa);
+	cgpa/=12.0;
+    printf("\n\n\t\tOverall CGPA: %.2f\n", cgpa);
     if (cgpa >= 3.5) {
-        printf("\n\n\tOverall Grade: A\n");
+        printf("\n\n\t\tOverall Grade: A\n");
     } else if (cgpa >= 3.0) {
-        printf("\n\n\tOverall Grade: B+\n");
+        printf("\n\n\t\tOverall Grade: B+\n");
     } else if (cgpa >= 2.5) {
-        printf("\n\n\tOverall Grade: B\n");
+        printf("\n\n\t\tOverall Grade: B\n");
     } else if (cgpa >= 2.0) {
-        printf("\n\n\tOverall Grade: C+\n");
+        printf("\n\n\t\tOverall Grade: C+\n");
     } else if (cgpa >= 1.5) {
-        printf("\n\n\tOverall Grade: C\n");
+        printf("\n\n\t\tOverall Grade: C\n");
     } else {
-        printf("\n\n\tOverall Grade: F\n");
+        printf("\n\n\t\tOverall Grade: F\n");
     }
 }
