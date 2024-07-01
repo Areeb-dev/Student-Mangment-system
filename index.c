@@ -7,7 +7,7 @@
 
 #include<math.h>
 
-#include <windows.h>
+// #include <windows.h>
 
 #define Student struct Stud
  
@@ -56,13 +56,14 @@ int main() {
   }
   system("color 9f");
   gotoxy(42, 8);
-  printf("LOGIN SMS");
+  printf("LOGIN IU | SMS");
   gotoxy(42, 10);
   printf("____________________________________");
   gotoxy(42, 11);
   printf("|\tEnter password : |");
   gotoxy(42, 12);
   printf("|__________________________________|");
+  //printf("\n\t\t\t\t\t4");
   gotoxy(65, 11);
   while (k < 10) {
     pas[k] = getch();
@@ -265,7 +266,7 @@ void modify(FILE * fp) {
       scanf("%f", & s.sgpa[i]);
       cgpa += s.sgpa[i];
     }
-    cgpa = cgpa / 8.0;
+    cgpa = cgpa / 12.0;
     fwrite( & s, sizeof(s), 1, fp);
   } else printf("\n\n\t!!!! ERROR !!!! RECORD NOT FOUND");
   printf("\n\n\t");
@@ -275,9 +276,9 @@ void modify(FILE * fp) {
 void display(FILE * fp) {
   title();
   Student s;
-  float overAllGPA=0.0;
   int i, siz = sizeof(s);
   rewind(fp);
+  
   while ((fread( & s, siz, 1, fp)) == 1) {
     printf("\n\t\tNAME : %s", s.name);
     printf("\n\n\t\tDEPARTMENT : %s", s.dept);
@@ -285,11 +286,11 @@ void display(FILE * fp) {
     printf("\n\n\t\tSGPA: ");
     for (i = 0; i < 12; i++){
         printf("| %.2f |", s.sgpa[i]);
-        overAllGPA+= s.sgpa[i];
     }
-	calculateOverallGrade(overAllGPA);
+	calculateOverallGrade(s.cgpa);
     printChar('-', 95);
   }
+  
   printf("\n\n\n\t");
   printChar('*', 65);
   printf("\n\n\t");
@@ -301,12 +302,13 @@ void Indivisual(FILE * fp) {
   int tempRoll, flag, siz, i;
   Student s;
   char another = 'y';
-  float overAllGPA=0.0;
   siz = sizeof(s);
+ 
   while (another == 'y' || another == 'Y') {
     printf("\n\n\tEnter Roll Number: ");
     scanf("%d", & tempRoll);
     rewind(fp);
+    flag =0;
     while ((fread( & s, siz, 1, fp)) == 1) {
       if (s.roll == tempRoll) {
         flag = 1;
@@ -320,9 +322,8 @@ void Indivisual(FILE * fp) {
       printf("\n\n\t\tSGPA: ");
        for (i = 0; i < 12; i++){
         printf("| %.2f |", s.sgpa[i]);
-        overAllGPA+= s.sgpa[i];
     	}
-		calculateOverallGrade(overAllGPA);
+		calculateOverallGrade(s.cgpa);
       printChar('-', 65);
     } else {
 		printf("\n\n\t\t!!!! ERROR RECORD NOT FOUND !!!!");
@@ -337,7 +338,6 @@ void searchStudentByName(FILE *fp) {
     title();
     char name[100];
     Student s;
-    float overAllGPA=0.0;
     int flag = 0, siz = sizeof(s);
 	int i ;
     printf("\n\n\tEnter the name of the student to search: ");
@@ -355,10 +355,9 @@ void searchStudentByName(FILE *fp) {
             printf("\n\n\t\tSGPA: ");
             for (i = 0; i < 12; i++){
 		        printf("| %.2f |", s.sgpa[i]);
-        		overAllGPA+= s.sgpa[i];
-    		}
+        	}
     		
-			calculateOverallGrade(overAllGPA);
+			calculateOverallGrade(s.cgpa);
             printChar('-', 65);
             break;
         }
@@ -374,7 +373,7 @@ void addStudent(FILE * fp) {
   title();
   char another = 'y';
   Student s;
-  int i = 0;
+  int i;
   float cgpa;
   fseek(fp, 0, SEEK_END);
   while (another == 'y' || another == 'Y') {
@@ -406,7 +405,8 @@ void addStudent(FILE * fp) {
 		}
     }
     printf("\n\n\tEnter SGPA for 12 semesters\n");
-    for (i , cgpa = 0; i < 12; i++) {
+    cgpa = 0.0;
+	for (i =0 ; i < 12; i++) {
       printf("\n\n\t\tEnter %d st semester GPA : ", i+1);
       scanf("%f", & s.sgpa[i]);
       cgpa += s.sgpa[i];
@@ -421,8 +421,7 @@ void addStudent(FILE * fp) {
 }
 
 void calculateOverallGrade(float cgpa) {
-	cgpa/=12.0;
-    printf("\n\n\t\tOverall CGPA: %.2f\n", cgpa);
+    printf("\n\n\t\tOverall CGPA: %.2f", cgpa);
     if (cgpa >= 3.5) {
         printf("\n\n\t\tOverall Grade: A\n");
     } else if (cgpa >= 3.0) {
